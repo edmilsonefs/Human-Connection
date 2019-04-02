@@ -22,8 +22,8 @@ let activityPub = null
 export { activityPub }
 
 export default class ActivityPub {
-  constructor (activityPubEndpointUri, internalGraphQlUri) {
-    this.endpoint = activityPubEndpointUri
+  constructor (internalGraphQlUri) {
+    this.endpoint = internalGraphQlUri
     this.dataSource = new NitroDataSource(internalGraphQlUri)
     this.collections = new Collections(this.dataSource)
   }
@@ -31,7 +31,7 @@ export default class ActivityPub {
   static init (server) {
     if (!activityPub) {
       dotenv.config()
-      activityPub = new ActivityPub(process.env.CLIENT_URI || 'http://localhost:3000', process.env.GRAPHQL_URI || 'http://localhost:4000')
+      activityPub = new ActivityPub(process.env.GRAPHQL_URI || 'http://localhost:4000')
 
       // integrate into running graphql express server
       server.express.set('ap', activityPub)
